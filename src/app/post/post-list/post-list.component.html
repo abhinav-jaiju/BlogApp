@@ -1,0 +1,45 @@
+<div class="header">
+    <div class="form-control">
+        <!--Search functionality-->
+        <input type="text" class="form-control" placeholder="Search text here..."[(ngModel)]="filter" >
+    </div>
+    <!--
+        [] --- property binding
+        () --- event binding 
+        ([])--- banana box for event and property --([ngModel])
+    -->
+    <button [routerLink]="" href="/post" class="btn btn-outline-secondary" style="float: right; margin-top: 10px; margin-bottom: 10px;" 
+    (click)="addPost()">Add Post</button>
+</div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date of Publish</th>
+                <th>Category ID</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor= "let emp of postService.post |filter: filter | paginate :{ itemsPerPage: 4, currentPage: page}">
+                <td>{{emp.PostId}}</td>
+                <td>{{emp.Title}}</td>
+                <td>{{emp.Description}}</td>
+                <td>{{emp.DateofPublish}}</td>
+                <td>{{emp.CategoryId}}</td>
+                <td>
+                    <button class="btn btn-sm btn-info" (click)="updatePostById(emp.PostId)"> Edit </button>
+                    &nbsp;
+                    <button class="btn btn-sm btn-outline-danger" (click)="deletePost(emp.PostId)"> X </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="footer">
+        <!--Pageination footer-->
+        <pagination-controls (pageChange) = "page = ($event)"></pagination-controls>
+    </div>

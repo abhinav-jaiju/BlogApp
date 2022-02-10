@@ -1,0 +1,74 @@
+<form name="postform" #form="ngForm" autocomplete="off" (ngSubmit)="onSubmit()"> 
+    <div class="form-group">
+        <label class="text-dark " style="font-weight: bold;">Category</label>
+        <select name="CategoryId" id="CategoryId"
+        class="form-control"
+        #CategoryId = "ngModel"
+        required
+        [(ngModel)] = "postService.formData.CategoryId"
+        >
+        <option value="0" disabled> Select Category</option>
+        <option *ngFor = " let dept of postService.category"
+        value="{{dept.CategoryId}}">{{dept.CategoryName}}
+        </option>
+        </select> 
+      
+        
+        <!-- validation 
+        <div class="validation-errors" *ngIf="cat_id.touched && cat_id.invalid" style="color: red; text-align: left;">
+            <div *ngIf="cat_id.errors.required">
+               Category is required!
+            </div>
+        </div>-->
+    </div>
+    <table class="table table-striped table-bordered table-success">
+        <thead>
+            <tr>
+                <th>PostId</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date of publish</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let post of postArray; let i = index">
+                <td>
+                    <input [(ngModel)]="post.PostId" class="form-control" type="text" name="{{post.PostId}}" readonly/>
+                </td>
+                <td>
+                    <input [(ngModel)]="post.Title" class="form-control" type="text" name="{{post.Title}}" readonly />
+                </td>
+                <td>
+                    <input [(ngModel)]="post.Description" class="form-control" type="text" name="{{post.Description}}"  readonly/>
+                </td>
+                <td>
+                    <input [(ngModel)]="post.DateofPublish" class="form-control" type="date" name="{{post.DateofPublish}}" readonly/>
+                </td>
+                <td>
+                    <button class="btn btn-outline-danger"  type="button" (click)="deleteValue(i)">X</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="form-control" type="text" id="PostId" [(ngModel)]="newAttributes.PostId" name="PostId"  readonly/>
+                </td>
+                <td>
+                    <input class="form-control" type="text" id="Title" [(ngModel)]="newAttributes.Title" name="Title" />
+                </td>
+                <td>
+                    <input class="form-control" type="text" id="Description" [(ngModel)]="newAttributes.Description" name="Description" />
+                </td>
+                <td>
+                    <input class="form-control" type="date" id="DateofPublish" [(ngModel)]="newAttributes.DateofPublish" name="DateofPublish" />
+                </td>
+                <td>
+                    <button class="btn btn-outline-success" type="button" (click)="addFieldValue()">+</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" style="text-align: center;"><button class="btn btn-lg btn-outline-primary" type="submit"  >Submit</button></td>
+            </tr>
+        </tbody>
+    </table>
+    </form>

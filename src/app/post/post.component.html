@@ -1,0 +1,87 @@
+<!--template driven form -->
+<form name ="postform" #form = "ngForm" autocomplete="off" (ngSubmit) = "onSubmit(form)">
+   <!--Post ID Hidden-->
+   <input type="hidden" name = "PostId" [(ngModel)] = "postService.formData.PostId">
+    <!--Post Name -->
+    <div class="form-group">
+        <label> Title :  </label>
+        <input type="text" name="Title"
+        #Title = "ngModel"
+        [(ngModel)] = "postService.formData.Title" class="form-control"
+        placeholder="Enter your post title here"
+        required minlength="5"
+        [ngClass] = "{'is-valid':Title.touched && Title.invalid}"/>
+        <!--Validation-->
+        <div class="validation-error" *ngIf = "Title.touched && Title.invalid">
+            <div *ngIf = "Title.errors.required">
+                Name is required
+            </div>
+        </div>
+    </div>
+
+    <!--Description-->
+    <div class="form-group">
+        <label> Description : </label>
+        <textarea name="Description"
+        #Description = "ngModel"
+        [(ngModel)] = "postService.formData.Description" class="form-control"
+        placeholder="Enter Your Description"
+        [ngClass] = "{'is-invalid' : Description.touched && Description.invalid}" 
+        cols="30" rows="10"></textarea>
+        <div class="validation-error" *ngIf = "Description.touched && Description.invalid">
+           
+            <div *ngIf = "Description.errors.required">
+                 Name is required
+            </div>
+        </div>
+    </div>
+    <!--Date of Joining-->
+    <div class="form-group">
+        <label>Date of Publish :  </label>
+        <input type="date" name = "DateofPublish"
+        #DateofPublish = "ngModel"
+        [(ngModel)] = "postService.formData.DateofPublish"
+        class="form-control"
+        placeholder="Enter Date of Publish"
+        required minlength="5" maxlength="25"
+        [ngClass] = "{'is-invalid': DateofPublish.touched && DateofPublish.invalid}"/>
+        <!--Validation-->
+        <div class="validation-error" *ngIf = "DateofPublish.touched && DateofPublish.invalid">
+           
+            <div *ngIf = "DateofPublish.errors.required">
+                 Date of Publishing required !
+            </div>
+        </div>
+    </div>
+
+     <!--Department dropdown-->
+     <div class="form-group">
+        <label>Category :  </label>
+        <select name="CategoryId" id="CategoryId"
+        class="form-control"
+        #CategoryId = "ngModel"
+        required
+        [(ngModel)] = "postService.formData.CategoryId"
+        >
+        <option value="0" disabled> Select Category</option>
+        <option *ngFor = " let dept of postService.category"
+        value="{{dept.CategoryId}}">{{dept.CategoryName}}
+        </option>
+        </select>
+        <!--Validation-->
+        <div class="validation-error" *ngIf = "CategoryId.touched && CategoryId.invalid">
+           
+            <div *ngIf = "CategoryId.errors.required">
+                 Category required
+            </div>
+        </div>
+    </div>
+    <!--Submit-->
+    <br>
+    <div class="form-gorup">
+        <button type="submit"
+        class="btn btn-lg btn-primary form-control"
+        [disabled] = "!(form.valid && form.dirty)"> Submit</button>
+    </div>
+
+</form>
